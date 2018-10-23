@@ -85,7 +85,9 @@ run() {
     for arg in $ARGS; do [[ "$arg" = "down" ]] && local __up_or_down="down"; done
     [[ -n "$VERSION" ]] && local __to_version=", \"$VERSION\"" || local __to_version=""
     [[ -n "$REPO_APP" ]] && local __repo_app="$REPO_APP" || local __repo_app=$APP
-    NODE_ACTION="${_rpc_command} 'Elixir.Edeliver.run_command(${_rpc_open_brackets}:migrate, \"${__repo_app}\", \"$ECTO_REPOSITORY\", ${__up_or_down}${__to_version}${_rpc_close_brackets})'"
+    NODE_ACTION="${_rpc_command}
+    'Elixir.Edeliver.run_command(${_rpc_open_brackets}:migrate,
+    \"${__repo_app}\", \"$ECTO_REPOSITORY\", :${__up_or_down}, ${__to_version}${_rpc_close_brackets})'"
 
 
 
