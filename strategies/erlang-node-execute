@@ -77,7 +77,8 @@ run() {
   elif [[ "$NODE_ACTION" = ping ]] && [[ "$RELEASE_CMD" = "mix" ]]; then
     NODE_ACTION="ping"
   elif [[ "$NODE_ACTION" = migrations ]] && [[ "$RELEASE_CMD" = "mix" ]]; then
-    NODE_ACTION="${_rpc_command} 'Elixir.Edeliver.run_command(${_rpc_open_brackets}:list_pending_migrations, \"$APP\", \"$ECTO_REPOSITORY\"${_rpc_close_brackets})'"
+    [[ -n "$REPO_APP" ]] && local __repo_app="$REPO_APP" || local __repo_app=$APP
+    NODE_ACTION="${_rpc_command} 'Elixir.Edeliver.run_command(${_rpc_open_brackets}:list_pending_migrations, \"${__repo_app}\", \"$ECTO_REPOSITORY\"${_rpc_close_brackets})'"
   elif [[ "$NODE_ACTION" = migrations ]] && [[ "$RELEASE_CMD" != "mix" ]]; then
     error "Showing migrations is only supported when using mix as release command."
   elif [[ "$NODE_ACTION" = migrate ]] && [[ "$RELEASE_CMD" = "mix" ]]; then
